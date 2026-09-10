@@ -1118,6 +1118,10 @@ export function createModel(
     reasoningConfig?.transport === "chat-completions-reasoning-effort"
       ? { modelKwargs: { reasoning_effort: reasoningConfig.effort } }
       : {};
+  const geminiThinkingLevelOptions =
+    reasoningConfig?.transport === "gemini-thinking-level"
+      ? { thinkingLevel: reasoningConfig.effort }
+      : {};
 
   if (provider === "gemini") {
     return new ChatGoogle({
@@ -1126,6 +1130,7 @@ export function createModel(
       platformType: "gai",
       // Gemini 3.x thought-signature round-trip; see the constant's comment.
       ...GEMINI_THOUGHT_SIGNATURE_OPTIONS,
+      ...geminiThinkingLevelOptions,
       ...googleMaxOutputTokensOptions,
       ...retryOptions,
     });

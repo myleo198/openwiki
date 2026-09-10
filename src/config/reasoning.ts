@@ -17,7 +17,9 @@ export const REASONING_EFFORT_VALUES = [
 export type ReasoningEffort = (typeof REASONING_EFFORT_VALUES)[number];
 
 export type ReasoningTransport =
-  "responses-reasoning" | "chat-completions-reasoning-effort";
+  | "responses-reasoning"
+  | "chat-completions-reasoning-effort"
+  | "gemini-thinking-level";
 
 export type ReasoningCapability = {
   transport: ReasoningTransport;
@@ -38,6 +40,11 @@ const OPENAI_GPT_56_REASONING_CAPABILITY = {
   values: REASONING_EFFORT_VALUES,
 } as const satisfies ReasoningCapability;
 
+const GEMINI_THINKING_LEVEL_REASONING_CAPABILITY = {
+  transport: "gemini-thinking-level",
+  values: ["low", "medium", "high"],
+} as const satisfies ReasoningCapability;
+
 const REASONING_CAPABILITIES: Partial<
   Record<OpenWikiProvider, Readonly<Record<string, ReasoningCapability>>>
 > = {
@@ -56,6 +63,9 @@ const REASONING_CAPABILITIES: Partial<
       transport: "chat-completions-reasoning-effort",
       values: ["none", "low", "high"],
     },
+  },
+  gemini: {
+    "gemini-3.6-flash": GEMINI_THINKING_LEVEL_REASONING_CAPABILITY,
   },
 };
 
