@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   BASETEN_BASE_URL_ENV_KEY,
+  BOB_BASE_URL_ENV_KEY,
   BEDROCK_DEFAULT_MAX_TOKENS,
   DEFAULT_MODEL_ID,
   DEFAULT_PROVIDER_RETRY_ATTEMPTS,
@@ -233,6 +234,11 @@ describe("resolveProviderBaseUrl", () => {
         [BASETEN_BASE_URL_ENV_KEY]: "https://gateway.example/baseten/v1",
       }),
     ).toBe("https://gateway.example/baseten/v1");
+    expect(
+      resolveProviderBaseUrl("bob", {
+        [BOB_BASE_URL_ENV_KEY]: "https://gateway.example/bob/v1",
+      }),
+    ).toBe("https://gateway.example/bob/v1");
     expect(
       resolveProviderBaseUrl("fireworks", {
         [FIREWORKS_BASE_URL_ENV_KEY]: "https://gateway.example/fireworks/v1",

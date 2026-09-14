@@ -6,6 +6,8 @@ import {
   ANTHROPIC_BASE_URL_ENV_KEY,
   BASETEN_API_KEY_ENV_KEY,
   BASETEN_BASE_URL_ENV_KEY,
+  BOB_API_KEY_ENV_KEY,
+  BOB_BASE_URL_ENV_KEY,
   BEDROCK_AWS_ACCESS_KEY_ID_ENV_KEY,
   BEDROCK_AWS_REGION_ENV_KEY,
   BEDROCK_AWS_SECRET_ACCESS_KEY_ENV_KEY,
@@ -103,6 +105,8 @@ export type CredentialDiagnostic = {
 export const MANAGED_ENV_KEYS = [
   BASETEN_API_KEY_ENV_KEY,
   BASETEN_BASE_URL_ENV_KEY,
+  BOB_API_KEY_ENV_KEY,
+  BOB_BASE_URL_ENV_KEY,
   COPILOT_API_KEY_ENV_KEY,
   COPILOT_BASE_URL_ENV_KEY,
   FIREWORKS_API_KEY_ENV_KEY,
@@ -462,6 +466,10 @@ function getBaseUrlDiagnosticWarnings(
     return getProviderBaseUrlWarnings("baseten", value);
   }
 
+  if (key === BOB_BASE_URL_ENV_KEY) {
+    return getProviderBaseUrlWarnings("bob", value);
+  }
+
   if (key === FIREWORKS_BASE_URL_ENV_KEY) {
     return getProviderBaseUrlWarnings("fireworks", value);
   }
@@ -498,6 +506,7 @@ function isNonSecretDiagnosticKey(key: string): boolean {
     key === OPENAI_COMPATIBLE_REASONING_EFFORT_SUPPORTED_ENV_KEY ||
     key === ANTHROPIC_BASE_URL_ENV_KEY ||
     key === BASETEN_BASE_URL_ENV_KEY ||
+    key === BOB_BASE_URL_ENV_KEY ||
     key === COPILOT_BASE_URL_ENV_KEY ||
     key === FIREWORKS_BASE_URL_ENV_KEY ||
     key === NVIDIA_BASE_URL_ENV_KEY ||
