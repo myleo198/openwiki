@@ -1,5 +1,10 @@
 import { describe, expect, test } from "vitest";
-import { formatEnv, MANAGED_ENV_KEYS, parseEnv } from "../../src/config/env.ts";
+import {
+  formatEnv,
+  MANAGED_ENV_KEYS,
+  parseEnv,
+  createCredentialPreview,
+} from "../../src/config/env.ts";
 
 describe("parseEnv", () => {
   test("parses simple KEY=value lines", () => {
@@ -195,5 +200,19 @@ describe("parseEnv <-> formatEnv round-trip", () => {
     };
 
     expect(parseEnv(formatEnv(original))).toEqual(original);
+  });
+});
+
+describe("createCredentialPreview", () => {
+  test("returns full string of asterisks for strings 10 chars or shorter", () => {
+    expect(createCredentialPreview("short1234")).toBe('"*********"');
+    expect(createCredentialPreview("1234567890")).toBe('"**********"');
+  });
+
+  test("returns ellipsis and last 4 characters for long strings", () => {
+    expect(createCredentialPreview("sk-abc123DEF456")).toBe('"...F456"');
+    expect(
+      createCredentialPreview("sk-or-v1-abcdefghijklmnopqrstuvwxyz0123"),
+    ).toBe('"...0123"');
   });
 });

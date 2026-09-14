@@ -519,12 +519,12 @@ function isNonSecretDiagnosticKey(key: string): boolean {
   );
 }
 
-function createCredentialPreview(value: string): string {
+export function createCredentialPreview(value: string): string {
   if (value.length <= 10) {
     return JSON.stringify("*".repeat(value.length));
   }
 
-  return JSON.stringify(`${value.slice(0, 6)}...${value.slice(-4)}`);
+  return JSON.stringify(`...${value.slice(-4)}`);
 }
 
 function getCredentialWarnings(value: string): string[] {
